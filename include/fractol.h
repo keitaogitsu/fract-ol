@@ -6,13 +6,13 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 14:22:46 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/06/18 15:03:44 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/06/21 22:19:01 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
-# include <mlx.h>
+# include "../minilibx-linux/mlx.h"
 # include <unistd.h>
 # include <stdlib.h>
 
