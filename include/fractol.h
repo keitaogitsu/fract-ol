@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 14:22:46 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/06/21 22:19:01 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/06/25 18:52:15 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include "../minilibx-linux/mlx.h"
 # include <unistd.h>
 # include <stdlib.h>
+# define KEY_PRESS (2)
+# define ESC (53)
 
 typedef struct s_data {
 	void	*img;
@@ -28,5 +30,6 @@ typedef struct s_vars {
 	void	*mlx;
 	void	*win;
 }				t_vars;
+
 
 #endif

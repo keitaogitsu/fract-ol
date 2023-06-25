@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 13:23:27 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/06/18 15:57:17 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/06/25 20:33:06 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,32 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int	closemlx(int keycode, t_vars *vars)
+int	closemlx(void *arg_vars)
 {
-	printf("%d\n", keycode);
-	if (keycode == 27)
-		mlx_destroy_window(vars->mlx, vars->win);
+	t_vars	*vars;
+
+	vars = (t_vars *)arg_vars;
+	printf("after:%p/%p\n", vars->mlx, vars->win);
+	if (vars->win != NULL && vars->mlx != NULL)
+		exit (0);
+	return (0);
+}
+
+int	keypress(int keycode, void	*arg_vars)
+{
+	t_vars	*vars;
+
+	vars = (t_vars *)arg_vars;
+	printf("after:%p/%p\n", vars->mlx, vars->win);
+	if (keycode == 65307)
+	{
+		if (vars->win != NULL && vars->win != NULL)
+		{
+			mlx_destroy_window(vars->mlx, vars->win);
+			exit (0);
+		}
+	}
+	vars = NULL;
 	return (0);
 }
 
@@ -46,6 +67,9 @@ int	main(void)
 								&img.endian);
 	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
-	mlx_key_hook(vars.win, closemlx, &vars);
+	printf("before:%p/%p\n", vars.mlx, vars.win);
+	mlx_hook(vars.win, 17, 0, closemlx, (void *)&vars);
+	mlx_hook(vars.win, KEY_PRESS, 1L << 0, keypress, (void *)&vars);
 	mlx_loop(vars.mlx);
+	return (0);
 }

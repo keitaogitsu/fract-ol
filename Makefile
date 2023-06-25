@@ -19,7 +19,7 @@ $(NAME):	$(OBJS)
 	$(MAKE) -C $(PRINTF_DIR)
 	$(MAKE) -C $(MINILIBX_DIR) all
 	$(CC) $(CFLAGS) $(MLX_FLAG) $(OBJS) $(PRINTF_DIR)/$(PRINTF) $(MINILIBX_DIR)/$(MINILIBX) -o $(NAME)
-	# $(CC) $(OBJS) -L/usr/X11R6/lib -lX11 -lXext -framework OpenGL -framework AppKit $(MINILIBX_DIR)/$(MINILIBX_DAR) -o $(NAME)
+#$(CC) $(OBJS) -L/usr/X11R6/lib -lX11 -lXext -framework OpenGL -framework AppKit $(MINILIBX_DIR)/$(MINILIBX_DAR) -o $(NAME)
 
 clean:
 	$(MAKE) -C $(PRINTF_DIR) clean
