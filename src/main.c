@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 13:23:27 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/06/25 20:33:06 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/06/30 07:42:13 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(void)
 		return (1);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
-	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
+	mlx_put_img(&img);
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 	printf("before:%p/%p\n", vars.mlx, vars.win);
 	mlx_hook(vars.win, 17, 0, closemlx, (void *)&vars);

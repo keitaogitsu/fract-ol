@@ -1,38 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.h                                          :+:      :+:    :+:   */
+/*   put_img.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/18 14:22:46 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/06/30 07:40:45 by kogitsu          ###   ########.fr       */
+/*   Created: 2023/06/29 22:32:55 by kogitsu           #+#    #+#             */
+/*   Updated: 2023/06/30 07:41:41 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRACTOL_H
-# define FRACTOL_H
-# include "../minilibx-linux/mlx.h"
-# include <unistd.h>
-# include <stdlib.h>
-# define KEY_PRESS (2)
-# define ESC (53)
+#include "../include/fractol.h"
 
-typedef struct s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
-
-typedef struct s_vars {
-	void	*mlx;
-	void	*win;
-}				t_vars;
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-
-
-
-#endif
+void    mlx_put_img(t_data *img)
+{
+    my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
+	my_mlx_pixel_put(&img, 10, 10, 0x00FF0000);
+}
