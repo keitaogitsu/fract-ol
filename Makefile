@@ -8,7 +8,7 @@ MINILIBX_DIR    := ./minilibx-linux
 MINILIBX        := libmlx.a
 MINILIBX_DAR	:= libmlx_Darwin.a
 
-SRCS            := ./src/main.c ./src/put_img.c
+SRCS            := ./src/main.c ./src/put_img_mandelbrot.c ./src/put_img_julia.c
 OBJS            := $(SRCS:%.c=%.o)
 
 %.o: %.c

@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_img.c                                          :+:      :+:    :+:   */
+/*   put_img_mandelbrot.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 22:32:55 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/09 16:50:09 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/07/13 11:30:11 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
+#include <stdio.h>
 
 double	my_sqrt(double x)
 {
@@ -37,7 +38,7 @@ double	abs_complex(t_complex a)
 	return (abs);
 }
 
-int	include_mandelbrot_set(t_complex c)
+int	include_mandelbrot_set(t_complex c, int max_iter)
 {
 	int			i;
 	t_complex	z;
@@ -46,7 +47,7 @@ int	include_mandelbrot_set(t_complex c)
 	i = 0;
 	z.real = 0;
 	z.imag = 0;
-	while (i++ < 20)
+	while (i++ < max_iter)
 	{
 		if (abs_complex(z) > 2.0)
 			return (0);
@@ -58,25 +59,35 @@ int	include_mandelbrot_set(t_complex c)
 	return (1);
 }
 
-void	mlx_put_img(t_data *img)
+void	mlx_put_img_mandelbrot(t_data *img)
 {
-// 	my_mlx_pixel_put(img, 5, 5, 0x00FF0000);
-// 	my_mlx_pixel_put(img, 10, 10, 0x00FF0000);
+
 	int ix;
-	int ix;
+	int iy;
 	float dx;
     float dy;
+    float x;
+    float y;
+    t_complex c;
 
+    ix = 0;
+    iy = 0;
 	dx = (XMAX - XMIN) / (double)NX;
 	dy = (YMAX - YMIN) / (double)NY;
-    for(int iy = 0; iy < NY; iy++) {
-        for(int ix = 0; ix < NX; ix++) {
-            float x = XMIN + dx*(double)ix;
-            float y = YMIN + dy*(double)iy;
-            complex<float> c(x, y);
-            if(include_mandelbrot_set(c)) {
-                cout << x << "  " << y << endl;
-            }
+    while (iy < NY)
+    {
+        ix = 0;
+        while (ix < NX)
+        {
+            x = XMIN + dx * (double)ix;
+            y = YMIN + dy * (double)iy;
+            c.real = x;
+            c.imag = y;
+            printf("x,y = %f, %f\n", c.real, c.imag);
+            if (!include_mandelbrot_set(c, MAX_ITER))
+                my_mlx_pixel_put(img, ix, iy, 0x00FF0000);
+            ix++;
         }
+        iy++;
     }
 }
