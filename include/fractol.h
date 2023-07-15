@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 14:22:46 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/13 13:04:30 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/07/15 17:13:02 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ void	mlx_put_img_mandelbrot(t_data *img);
 double	my_sqrt(double x);
 double	abs_complex(t_complex a);
 void	mlx_put_img_julia(t_data *img, float c_real, float c_imag);
+void	put_usage_description(void);
 
 #endif
