@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 14:22:46 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/16 16:54:11 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/07/17 17:58:12 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,41 @@ typedef struct s_data {
 	int		endian;
 }				t_data;
 
+typedef struct s_coord {
+	int	x;
+	int	y;
+}				t_coord;
+
+typedef struct s_screen_coord {
+	int	x0;
+	int	x1;
+	int	y0;
+	int	y1;
+}				t_screen_coord;
+
+
 typedef struct s_vars {
-	void	*mlx;
-	void	*win;
+	void			*mlx;
+	void			*win;
+	float			rate;
+	t_data			*img;
+	char			*fig_type;
+	t_coord			*mouse_coord;
+	t_screen_coord	screen_coord;
 }				t_vars;
 
 typedef struct s_complex {
-	float	real;
-	float	imag;
+	double	real;
+	double	imag;
 }				t_complex;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void	mlx_put_img_mandelbrot(t_data *img);
+void	mlx_put_img_mandelbrot(t_vars *vars);
 double	my_sqrt(double x);
 double	abs_complex(t_complex a);
-void	mlx_put_img_julia(t_data *img, float c_real, float c_imag);
+void	mlx_put_img_julia(t_data *img, double c_real, double c_imag);
 void	put_usage_description(void);
+int		ft_strcmp(char *s1, char *s2);
+void	clear_img(t_data *img);
 
 #endif

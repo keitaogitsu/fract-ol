@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 10:57:49 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/15 14:14:03 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/07/17 13:07:51 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ static int	include_julia_set(t_complex z, t_complex c, int max_iter)
 
 static void	put_julia(int *ix, int *iy, t_data *img, t_complex c)
 {
-	float		dx;
-	float		dy;
-	float		x;
-	float		y;
+	double		dx;
+	double		dy;
+	double		x;
+	double		y;
 	t_complex	z;
 
 	dx = (XMAX - XMIN) / (double)NX;
@@ -47,12 +47,11 @@ static void	put_julia(int *ix, int *iy, t_data *img, t_complex c)
 	y = YMIN + dy * (double)*iy;
 	z.real = x;
 	z.imag = y;
-	printf("x,y = %f, %f\n", z.real, z.imag);
 	if (include_julia_set(z, c, MAX_ITER))
 		my_mlx_pixel_put(img, *ix, *iy, 0x00FF0000);
 }
 
-void	mlx_put_img_julia(t_data *img, float c_real, float c_imag)
+void	mlx_put_img_julia(t_data *img, double c_real, double c_imag)
 {
 	int			ix;
 	int			iy;

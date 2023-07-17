@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calc.c                                             :+:      :+:    :+:   */
+/*   clear_img.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/15 13:41:05 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/17 13:00:31 by kogitsu          ###   ########.fr       */
+/*   Created: 2023/07/17 12:38:50 by kogitsu           #+#    #+#             */
+/*   Updated: 2023/07/17 17:38:08 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
+#include <stdio.h>
 
-double	my_sqrt(double x)
+void	clear_img(t_data *img)
 {
-	int		i;
-	double	y;
+	int	ix;
+	int	iy;
 
-	if (x == 0)
-		return (0);
-	else
+	ix = 0;
+	iy = 0;
+	printf("42tokyo\n");
+	while (iy < NY)
 	{
-		y = 1;
-		i = 0;
-		while (i++ < 10)
-			y = (y + x / y) / 2;
-		return (y);
+		ix = 0;
+		while (ix < NX)
+		{
+			my_mlx_pixel_put(img, ix, iy, 0);
+			ix++;
+		}
+		iy++;
 	}
-}
-
-double	abs_complex(t_complex a)
-{
-	double	abs;
-
-	abs = my_sqrt(a.real * a.real + a.imag * a.imag);
-	return (abs);
 }

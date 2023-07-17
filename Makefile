@@ -9,7 +9,7 @@ MINILIBX        := libmlx.a
 MINILIBX_DAR	:= libmlx_Darwin.a
 
 SRCS            := ./src/main.c ./src/put_img_mandelbrot.c ./src/put_img_julia.c ./src/calc.c \
-					./src/put_usage_description.c
+					./src/put_usage_description.c ./src/ft_strcmp.c ./src/clear_img.c
 
 OBJS            := $(SRCS:%.c=%.o)
 
