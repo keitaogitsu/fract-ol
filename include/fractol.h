@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 14:22:46 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/15 17:13:02 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/07/16 16:54:11 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,14 @@
 # include "../ft_printf/ft_printf.h"
 # include <unistd.h>
 # include <stdlib.h>
-# define KEY_PRESS (2)
-# define ESC (53)
-# define NX 800
-# define NY 800
+# define KEY_PRESS 2
+# define ESC 53
+# define SCROLL_UP 4
+# define SCROLL_DOWN 5
+# define ZOOMIN_RATE 0.8
+# define ZOOMOUT_RATE 1.25
+# define NX 500
+# define NY 500
 # define XMIN -2.0
 # define YMIN -2.0
 # define XMAX 2.0

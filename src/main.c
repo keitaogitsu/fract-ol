@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 13:23:27 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/15 17:25:50 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/07/16 16:55:00 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,22 @@ int	keypress(int keycode, t_vars *vars)
 	return (0);
 }
 
-int	mouse_hook(int keycode, t_vars *vars)
+int	mouse_hook(int button, int x, int y, t_vars *vars)
 {
-	vars = (t_vars *)vars;
+	double	rate;
 
-	ft_printf("%d\n", keycode);
+	rate = 0;
+	// if (keycode == 4)
+	// 	zoom_up()
+	// ft_printf("button:%d\nx:%d\ny:%d\n", button, x, y);
+	if (button == SCROLL_UP)
+		rate = ZOOMIN_RATE;
+	else if (button == SCROLL_DOWN)
+		rate = ZOOMOUT_RATE;
+	if (rate != 0)
+	{
+		
+	}
 	return (0);
 }
 
@@ -60,8 +71,8 @@ int	main(int argc, char **argv)
 		vars.mlx = mlx_init();
 		if (vars.mlx == NULL)
 			return (1);
-		vars.win = mlx_new_window(vars.mlx, 800, 800, "Hello world!");
-		img.img = mlx_new_image(vars.mlx, 800, 800);
+		vars.win = mlx_new_window(vars.mlx, NX, NY, "Hello world!");
+		img.img = mlx_new_image(vars.mlx, NX, NY);
 		if (img.img == NULL)
 			return (1);
 		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, \
@@ -77,11 +88,11 @@ int	main(int argc, char **argv)
 			put_usage_description();
 			exit(1);
 		}
-
 		mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
-		mlx_hook(vars.win, 17, 0, closemlx, (void *)&vars);
-		mlx_hook(vars.win, KEY_PRESS, 1L << 0, keypress, (void *)&vars);
+		mlx_hook(vars.win, 17, 0, closemlx, &vars);
+		mlx_hook(vars.win, KEY_PRESS, 1L << 0, keypress, &vars);
 		mlx_mouse_hook(vars.win, mouse_hook, &vars);
+		// mlx_hook(vars.win, MOUSE_MOVE, 0L, get_position, &vars);
 		mlx_loop(vars.mlx);
 		return (0);
 	}
