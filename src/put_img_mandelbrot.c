@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 22:32:55 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/17 17:52:35 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/07/28 20:24:32 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ static void	put_mandelbrot(int *ix, int *iy, t_vars *vars)
 	double		dx;
 	double		dy;
 	t_complex	c;
-	static double		x_max = XMAX;
-	static double		x_min = XMIN;
-	static double		y_max = YMAX;
-	static double		y_min = YMIN;
+	double *x0, *x1, *y0, *y1;
 
 	if (vars->rate == 1.0)
 	{
@@ -55,15 +52,27 @@ static void	put_mandelbrot(int *ix, int *iy, t_vars *vars)
 	}
 	else
 	{
-		x_min = vars->rate * x_min + (1.0 - vars->rate) * vars->mouse_coord->x;
-		x_max = vars->rate * x_max + (1.0 - vars->rate) * vars->mouse_coord->x;
-		y_min = vars->rate * y_min + (1.0 - vars->rate) * vars->mouse_coord->y;
-		y_max = vars->rate * y_max + (1.0 - vars->rate) * vars->mouse_coord->y;
-		printf("x_min:%lf|x_max:%lf|y_min:%lf|y_max:%lf\n", x_min, x_max, y_min, y_max);
-		dx = (x_max - x_min) / (double)NX;
-		dy = (y_max - y_min) / (double)NY;
-		x = x_min + dx * (double)(*ix);
-		y = y_min + dy * (double)(*iy);
+		x0 = vars->screen_coord->x0;
+		x1 = vars->screen_coord->x1;
+		y0 = vars->screen_coord->y0;
+		y1 = vars->screen_coord->y1;
+		*x0 = vars->rate * (*x0) + (1.0 - vars->rate) * vars->mouse_coord->x;
+		*x1 = vars->rate * (*x1) + (1.0 - vars->rate) * vars->mouse_coord->x;
+		*y0 = vars->rate * (*y0) + (1.0 - vars->rate) * vars->mouse_coord->y;
+		*y1 = vars->rate * (*y1) + (1.0 - vars->rate) * vars->mouse_coord->y;
+		// *(vars->screen_coord->x0) = vars->rate * *(vars->screen_coord->x0) + \
+		// 						(1.0 - vars->rate) * vars->mouse_coord->x;
+		// *(vars->screen_coord->x1) = vars->rate * *(vars->screen_coord->x1) + \
+		// 						(1.0 - vars->rate) * vars->mouse_coord->x;
+		// *(vars->screen_coord->y0) = vars->rate * *(vars->screen_coord->y0) + \
+		// 						(1.0 - vars->rate) * vars->mouse_coord->y;
+		// *(vars->screen_coord->y1) = vars->rate * *(vars->screen_coord->y1) + \
+		// 						(1.0 - vars->rate) * vars->mouse_coord->y;
+		// printf("x0:%lf|x1:%lf|y0:%lf|y1:%lf\n", vars->screen_coord->x0, vars->screen_coord->x1, vars->screen_coord->y0, vars->screen_coord->y1);
+		dx = (*x1 - *x0) / (double)NX;
+		dy = (*y1 - *y0) / (double)NY;
+		x = *(vars->screen_coord->x0) + dx * (double)(*ix);
+		y = *(vars->screen_coord->y0) + dy * (double)(*iy);
 	}
 	c.real = x;
 	c.imag = y;
@@ -78,7 +87,7 @@ void	mlx_put_img_mandelbrot(t_vars *vars)
 
 	ix = 0;
 	iy = 0;
-	printf("in mlx_put_img_mandelbrot: %f\n", vars->rate);
+	printf("in mlx_put_img_mandelbrot: %f\n", *vars->screen_coord->x0);
 	while (iy < NY)
 	{
 		ix = 0;

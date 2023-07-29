@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 14:22:46 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/17 17:58:12 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/07/28 20:25:55 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ typedef struct s_coord {
 }				t_coord;
 
 typedef struct s_screen_coord {
-	int	x0;
-	int	x1;
-	int	y0;
-	int	y1;
+	double	*x0;
+	double	*x1;
+	double	*y0;
+	double	*y1;
 }				t_screen_coord;
 
 
@@ -58,7 +58,7 @@ typedef struct s_vars {
 	t_data			*img;
 	char			*fig_type;
 	t_coord			*mouse_coord;
-	t_screen_coord	screen_coord;
+	t_screen_coord	*screen_coord;
 }				t_vars;
 
 typedef struct s_complex {

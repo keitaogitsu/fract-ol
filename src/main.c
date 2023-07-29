@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 13:23:27 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/17 18:01:00 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/07/23 06:15:54 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int	mouse_hook(int button, int x, int y, t_vars *vars)
 		vars->rate = ZOOMOUT_RATE;
 	else
 		vars->rate = 1.0;
-	printf("%f\n", vars->rate);
-	ft_printf("%s\n", vars->fig_type);
 	if (vars->rate != 1.0)
 	{
 		clear_img(vars->img);
@@ -73,9 +71,19 @@ int	main(int argc, char **argv)
 	t_vars	vars;
 	t_data	img;
 	t_coord	coord;
-
+	t_screen_coord s_coord;
+	double x0 = 0.0;
+	double x1 = 500.0;
+	double y0 = 0.0;
+	double y1 = 500.0;
+	
 	coord.x = 0;
 	coord.y = 0;
+	
+	s_coord.x0 = &x0;
+	s_coord.x0 = &x1;
+	s_coord.y0 = &y0;
+	s_coord.y1 = &y1;
 	if ((argc == 3 && ft_strcmp(argv[1], "j") == 0) || \
 		(argc == 2 && ft_strcmp(argv[1], "m") == 0))
 	{
@@ -83,7 +91,7 @@ int	main(int argc, char **argv)
 		vars.img = &img;
 		vars.mouse_coord = &coord;
 		vars.rate = 1.0;
-		vars.screen_coord
+		vars.screen_coord = &s_coord;
 		if (vars.mlx == NULL)
 			return (1);
 		vars.win = mlx_new_window(vars.mlx, NX, NY, "Hello world!");
