@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 14:22:46 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/28 20:25:55 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/07/29 19:39:06 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # define SCROLL_DOWN 5
 # define ZOOMIN_RATE 0.8
 # define ZOOMOUT_RATE 1.25
-# define NX 500
-# define NY 500
+# define NX 300
+# define NY 300
 # define XMIN -2.0
 # define YMIN -2.0
 # define XMAX 2.0
@@ -44,10 +44,10 @@ typedef struct s_coord {
 }				t_coord;
 
 typedef struct s_screen_coord {
-	double	*x0;
-	double	*x1;
-	double	*y0;
-	double	*y1;
+	double	x0;
+	double	x1;
+	double	y0;
+	double	y1;
 }				t_screen_coord;
 
 

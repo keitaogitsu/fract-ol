@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 22:32:55 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/28 20:24:32 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/07/29 19:30:33 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,26 @@ static int	include_mandelbrot_set(t_complex c, int max_iter)
 	return (1);
 }
 
-static void	put_mandelbrot(int *ix, int *iy, t_vars *vars)
+static void	put_mandelbrot(int *ix, int *iy, t_vars *vars, t_screen_coord *new_screen_co)
 {
+	double		X;
+	double		Y;
 	double		x;
 	double		y;
 	double		dx;
 	double		dy;
 	t_complex	c;
-	double *x0, *x1, *y0, *y1;
+	double x0, x1, y0, y1;
+	double *new_x0, *new_x1, *new_y0, *new_y1;
+	static double		init_x0 = 0.0;
+	static double		init_x1 = 0.0;
+	static double		init_y0 = 0.0;
+	static double		init_y1 = 0.0;
+	
+	new_x0 = &init_x0;
+	new_x1 = &init_x1;
+	new_y0 = &init_y0;
+	new_y1 = &init_y1;
 
 	if (vars->rate == 1.0)
 	{
@@ -51,15 +63,21 @@ static void	put_mandelbrot(int *ix, int *iy, t_vars *vars)
 		y = YMIN + dy * (double)*iy;
 	}
 	else
-	{
+	{		
 		x0 = vars->screen_coord->x0;
 		x1 = vars->screen_coord->x1;
 		y0 = vars->screen_coord->y0;
 		y1 = vars->screen_coord->y1;
-		*x0 = vars->rate * (*x0) + (1.0 - vars->rate) * vars->mouse_coord->x;
-		*x1 = vars->rate * (*x1) + (1.0 - vars->rate) * vars->mouse_coord->x;
-		*y0 = vars->rate * (*y0) + (1.0 - vars->rate) * vars->mouse_coord->y;
-		*y1 = vars->rate * (*y1) + (1.0 - vars->rate) * vars->mouse_coord->y;
+		// printf("x0:%lf|x1:%lf|y0:%lf|y1:%lf\n", x0, x1, y0, y1);
+		new_screen_co->x0 = vars->rate * x0 + (1.0 - vars->rate) * vars->mouse_coord->x;
+		new_screen_co->x1 = vars->rate * x1 + (1.0 - vars->rate) * vars->mouse_coord->x;
+		new_screen_co->y0 = vars->rate * y0 + (1.0 - vars->rate) * vars->mouse_coord->y;
+		new_screen_co->y1 = vars->rate * y1 + (1.0 - vars->rate) * vars->mouse_coord->y;
+		// *x0 = vars->rate * (*x0) + (1.0 - vars->rate) * vars->mouse_coord->x;
+		// *x1 = vars->rate * (*x1) + (1.0 - vars->rate) * vars->mouse_coord->x;
+		// *y0 = vars->rate * (*y0) + (1.0 - vars->rate) * vars->mouse_coord->y;
+		// *y1 = vars->rate * (*y1) + (1.0 - vars->rate) * vars->mouse_coord->y;
+		// printf("(new) x0:%lf|x1:%lf|y0:%lf|y1:%lf\n", new_screen_co->x0, new_screen_co->x1, new_screen_co->y0, new_screen_co->y1);
 		// *(vars->screen_coord->x0) = vars->rate * *(vars->screen_coord->x0) + \
 		// 						(1.0 - vars->rate) * vars->mouse_coord->x;
 		// *(vars->screen_coord->x1) = vars->rate * *(vars->screen_coord->x1) + \
@@ -68,11 +86,12 @@ static void	put_mandelbrot(int *ix, int *iy, t_vars *vars)
 		// 						(1.0 - vars->rate) * vars->mouse_coord->y;
 		// *(vars->screen_coord->y1) = vars->rate * *(vars->screen_coord->y1) + \
 		// 						(1.0 - vars->rate) * vars->mouse_coord->y;
-		// printf("x0:%lf|x1:%lf|y0:%lf|y1:%lf\n", vars->screen_coord->x0, vars->screen_coord->x1, vars->screen_coord->y0, vars->screen_coord->y1);
-		dx = (*x1 - *x0) / (double)NX;
-		dy = (*y1 - *y0) / (double)NY;
-		x = *(vars->screen_coord->x0) + dx * (double)(*ix);
-		y = *(vars->screen_coord->y0) + dy * (double)(*iy);
+		dx = (new_screen_co->x1 - new_screen_co->x0) / (double)NX;
+		dy = (new_screen_co->y1 - new_screen_co->y0) / (double)NY;
+		X = new_screen_co->x0 + dx * (double)(*ix);
+		Y = new_screen_co->y0 + dy * (double)(*iy);
+		x = X / 125.0 - 2.0;
+		y = -Y / 125.0 + 2.0; 
 	}
 	c.real = x;
 	c.imag = y;
@@ -84,18 +103,29 @@ void	mlx_put_img_mandelbrot(t_vars *vars)
 {
 	int		ix;
 	int		iy;
-
+	t_screen_coord new;
 	ix = 0;
 	iy = 0;
-	printf("in mlx_put_img_mandelbrot: %f\n", *vars->screen_coord->x0);
+	// printf("in mlx_put_img_mandelbrot: x0:%f | x1:%f | y0:%f | y1:%f \n", *vars->screen_coord->x0, *vars->screen_coord->x1, *vars->screen_coord->y0, *vars->screen_coord->y1);
 	while (iy < NY)
 	{
 		ix = 0;
 		while (ix < NX)
 		{
-			put_mandelbrot(&ix, &iy, vars);
+			put_mandelbrot(&ix, &iy, vars, &new);
+			// if (ix == 10)
+			// 	break ;
 			ix++;
 		}
+		// if (iy == 10)
+		// 	break ;
 		iy++;
+	}
+	if (vars->rate != 1.0)
+	{
+		vars->screen_coord->x0 = new.x0;
+		vars->screen_coord->x1 = new.x1;
+		vars->screen_coord->y0 = new.y0;
+		vars->screen_coord->y1 = new.y1;
 	}
 }

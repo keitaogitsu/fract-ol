@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 13:23:27 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/23 06:15:54 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/07/29 19:37:56 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	mouse_hook(int button, int x, int y, t_vars *vars)
 		clear_img(vars->img);
 		if (ft_strcmp(vars->fig_type, "m") == 0)
 		{
+			printf("%f\n", vars->screen_coord->x1);
 			mlx_put_img_mandelbrot(vars);
 			mlx_put_image_to_window(vars->mlx, vars->win, vars->img->img, 0, 0);
 		}
@@ -80,10 +81,11 @@ int	main(int argc, char **argv)
 	coord.x = 0;
 	coord.y = 0;
 	
-	s_coord.x0 = &x0;
-	s_coord.x0 = &x1;
-	s_coord.y0 = &y0;
-	s_coord.y1 = &y1;
+	// vars.screen_coord = malloc(sizeof(t_screen_coord));
+	s_coord.x0 = x0;
+	s_coord.x1 = x1;
+	s_coord.y0 = y0;
+	s_coord.y1 = y1;
 	if ((argc == 3 && ft_strcmp(argv[1], "j") == 0) || \
 		(argc == 2 && ft_strcmp(argv[1], "m") == 0))
 	{
