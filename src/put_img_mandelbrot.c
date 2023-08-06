@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 22:32:55 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/29 19:30:33 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/07/30 08:43:43 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,7 @@ static void	put_mandelbrot(int *ix, int *iy, t_vars *vars, t_screen_coord *new_s
 	double		dy;
 	t_complex	c;
 	double x0, x1, y0, y1;
-	double *new_x0, *new_x1, *new_y0, *new_y1;
-	static double		init_x0 = 0.0;
-	static double		init_x1 = 0.0;
-	static double		init_y0 = 0.0;
-	static double		init_y1 = 0.0;
 	
-	new_x0 = &init_x0;
-	new_x1 = &init_x1;
-	new_y0 = &init_y0;
-	new_y1 = &init_y1;
-
 	if (vars->rate == 1.0)
 	{
 		dx = (XMAX - XMIN) / (double)NX;
@@ -68,24 +58,10 @@ static void	put_mandelbrot(int *ix, int *iy, t_vars *vars, t_screen_coord *new_s
 		x1 = vars->screen_coord->x1;
 		y0 = vars->screen_coord->y0;
 		y1 = vars->screen_coord->y1;
-		// printf("x0:%lf|x1:%lf|y0:%lf|y1:%lf\n", x0, x1, y0, y1);
 		new_screen_co->x0 = vars->rate * x0 + (1.0 - vars->rate) * vars->mouse_coord->x;
 		new_screen_co->x1 = vars->rate * x1 + (1.0 - vars->rate) * vars->mouse_coord->x;
 		new_screen_co->y0 = vars->rate * y0 + (1.0 - vars->rate) * vars->mouse_coord->y;
 		new_screen_co->y1 = vars->rate * y1 + (1.0 - vars->rate) * vars->mouse_coord->y;
-		// *x0 = vars->rate * (*x0) + (1.0 - vars->rate) * vars->mouse_coord->x;
-		// *x1 = vars->rate * (*x1) + (1.0 - vars->rate) * vars->mouse_coord->x;
-		// *y0 = vars->rate * (*y0) + (1.0 - vars->rate) * vars->mouse_coord->y;
-		// *y1 = vars->rate * (*y1) + (1.0 - vars->rate) * vars->mouse_coord->y;
-		// printf("(new) x0:%lf|x1:%lf|y0:%lf|y1:%lf\n", new_screen_co->x0, new_screen_co->x1, new_screen_co->y0, new_screen_co->y1);
-		// *(vars->screen_coord->x0) = vars->rate * *(vars->screen_coord->x0) + \
-		// 						(1.0 - vars->rate) * vars->mouse_coord->x;
-		// *(vars->screen_coord->x1) = vars->rate * *(vars->screen_coord->x1) + \
-		// 						(1.0 - vars->rate) * vars->mouse_coord->x;
-		// *(vars->screen_coord->y0) = vars->rate * *(vars->screen_coord->y0) + \
-		// 						(1.0 - vars->rate) * vars->mouse_coord->y;
-		// *(vars->screen_coord->y1) = vars->rate * *(vars->screen_coord->y1) + \
-		// 						(1.0 - vars->rate) * vars->mouse_coord->y;
 		dx = (new_screen_co->x1 - new_screen_co->x0) / (double)NX;
 		dy = (new_screen_co->y1 - new_screen_co->y0) / (double)NY;
 		X = new_screen_co->x0 + dx * (double)(*ix);
