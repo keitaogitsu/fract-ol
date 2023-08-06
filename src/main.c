@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 13:23:27 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/29 19:37:56 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/06 18:50:01 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int	keypress(int keycode, t_vars *vars)
 
 int	mouse_hook(int button, int x, int y, t_vars *vars)
 {
-	vars->mouse_coord->x = x;
-	vars->mouse_coord->y = y;
-	ft_printf("x:%d|y:%d\n", vars->mouse_coord->x, vars->mouse_coord->y);
+	vars->mouse_co->double_x = (double)x;
+	vars->mouse_co->double_y = (double)y;
+	ft_printf("x:%lf|y:%lf\n", vars->mouse_co->double_x, vars->mouse_co->double_y);
 	if (button == SCROLL_DOWN)
 		vars->rate = ZOOMIN_RATE;
 	else if (button == SCROLL_UP)
@@ -59,8 +59,16 @@ int	mouse_hook(int button, int x, int y, t_vars *vars)
 		clear_img(vars->img);
 		if (ft_strcmp(vars->fig_type, "m") == 0)
 		{
-			printf("%f\n", vars->screen_coord->x1);
+			printf("%f\n", vars->scr_co->x1);
 			mlx_put_img_mandelbrot(vars);
+			mlx_put_image_to_window(vars->mlx, vars->win, vars->img->img, 0, 0);
+		}
+		else if (ft_strcmp(vars->fig_type, "j") == 0)
+		{
+			printf("%f\n", vars->scr_co->x1);
+			printf("julia_para(x):%f\n", vars->julia_parameter.double_x);
+			printf("julia_para(y):%f\n", vars->julia_parameter.double_y);
+			mlx_put_img_julia(vars);
 			mlx_put_image_to_window(vars->mlx, vars->win, vars->img->img, 0, 0);
 		}
 	}
@@ -72,16 +80,14 @@ int	main(int argc, char **argv)
 	t_vars	vars;
 	t_data	img;
 	t_coord	coord;
-	t_screen_coord s_coord;
+	t_scr_co s_coord;
 	double x0 = 0.0;
 	double x1 = 500.0;
 	double y0 = 0.0;
 	double y1 = 500.0;
 	
-	coord.x = 0;
-	coord.y = 0;
-	
-	// vars.screen_coord = malloc(sizeof(t_screen_coord));
+	coord.double_x = 0.0;
+	coord.double_y = 0.0;
 	s_coord.x0 = x0;
 	s_coord.x1 = x1;
 	s_coord.y0 = y0;
@@ -91,9 +97,9 @@ int	main(int argc, char **argv)
 	{
 		vars.mlx = mlx_init();
 		vars.img = &img;
-		vars.mouse_coord = &coord;
+		vars.mouse_co = &coord;
 		vars.rate = 1.0;
-		vars.screen_coord = &s_coord;
+		vars.scr_co = &s_coord;
 		if (vars.mlx == NULL)
 			return (1);
 		vars.win = mlx_new_window(vars.mlx, NX, NY, "Hello world!");
@@ -106,12 +112,16 @@ int	main(int argc, char **argv)
 		if (ft_strcmp(argv[1], "j") == 0 && ft_strcmp(argv[2], "1") == 0)
 		{
 			vars.fig_type = "j";
-			mlx_put_img_julia(&img, 0.4, -0.325);
+			vars.julia_parameter.double_x = 0.4;
+			vars.julia_parameter.double_y = -0.325;
+			mlx_put_img_julia(&vars);
 		}
 		else if (ft_strcmp(argv[1], "j") == 0 && ft_strcmp(argv[2], "2") == 0)
 		{
 			vars.fig_type = "j";
-			mlx_put_img_julia(&img, -0.8, 0.156);
+			vars.julia_parameter.double_x = -0.8;
+			vars.julia_parameter.double_y = 0.156;
+			mlx_put_img_julia(&vars);
 		}
 		else if (ft_strcmp(argv[1], "m") == 0)
 		{

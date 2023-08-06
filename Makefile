@@ -8,8 +8,15 @@ MINILIBX_DIR    := ./minilibx-linux
 MINILIBX        := libmlx.a
 MINILIBX_DAR	:= libmlx_Darwin.a
 
-SRCS            := ./src/main.c ./src/put_img_mandelbrot.c ./src/put_img_julia.c ./src/calc.c \
-					./src/put_usage_description.c ./src/ft_strcmp.c ./src/clear_img.c
+SRCS            := 	./src/main.c \
+					./src/put_img_mandelbrot.c \
+					./src/put_img_julia.c \
+					./src/calc.c \
+					./src/put_usage_description.c \
+					./src/ft_strcmp.c \
+					./src/clear_img.c \
+					./src/screen_coord_set.c \
+					./src/zoom_calc.c
 
 OBJS            := $(SRCS:%.c=%.o)
 

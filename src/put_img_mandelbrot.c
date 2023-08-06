@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 22:32:55 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/07/30 08:43:43 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/06 18:43:13 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,74 +34,49 @@ static int	include_mandelbrot_set(t_complex c, int max_iter)
 	return (1);
 }
 
-static void	put_mandelbrot(int *ix, int *iy, t_vars *vars, t_screen_coord *new_screen_co)
+void	put_mandelbrot(t_pixel_co *p_co, t_vars *vars, t_scr_co *new_scr)
 {
-	double		X;
-	double		Y;
-	double		x;
-	double		y;
-	double		dx;
-	double		dy;
+	t_coord		val;
+	t_coord		diff;
 	t_complex	c;
-	double x0, x1, y0, y1;
-	
+	t_scr_co	tmp;
+
 	if (vars->rate == 1.0)
 	{
-		dx = (XMAX - XMIN) / (double)NX;
-		dy = (YMAX - YMIN) / (double)NY;
-		x = XMIN + dx * (double)*ix;
-		y = YMIN + dy * (double)*iy;
+		diff.double_x = (XMAX - XMIN) / (double)NX;
+		diff.double_y = (YMAX - YMIN) / (double)NY;
+		val.double_x = XMIN + diff.double_x * (double)p_co->x;
+		val.double_y = YMIN + diff.double_y * (double)p_co->y;
 	}
 	else
-	{		
-		x0 = vars->screen_coord->x0;
-		x1 = vars->screen_coord->x1;
-		y0 = vars->screen_coord->y0;
-		y1 = vars->screen_coord->y1;
-		new_screen_co->x0 = vars->rate * x0 + (1.0 - vars->rate) * vars->mouse_coord->x;
-		new_screen_co->x1 = vars->rate * x1 + (1.0 - vars->rate) * vars->mouse_coord->x;
-		new_screen_co->y0 = vars->rate * y0 + (1.0 - vars->rate) * vars->mouse_coord->y;
-		new_screen_co->y1 = vars->rate * y1 + (1.0 - vars->rate) * vars->mouse_coord->y;
-		dx = (new_screen_co->x1 - new_screen_co->x0) / (double)NX;
-		dy = (new_screen_co->y1 - new_screen_co->y0) / (double)NY;
-		X = new_screen_co->x0 + dx * (double)(*ix);
-		Y = new_screen_co->y0 + dy * (double)(*iy);
-		x = X / 125.0 - 2.0;
-		y = -Y / 125.0 + 2.0; 
+	{
+		cursor_center_zoom_calc(vars, &tmp);
+		screen_co_set(&tmp, new_scr);
+		pixel_to_general(new_scr, &(p_co->x), &(p_co->y), &val);
 	}
-	c.real = x;
-	c.imag = y;
+	c.real = val.double_x;
+	c.imag = val.double_y;
 	if (!include_mandelbrot_set(c, MAX_ITER))
-		my_mlx_pixel_put(vars->img, *ix, *iy, 0x00FF0000);
+		my_mlx_pixel_put(vars->img, p_co->x, p_co->y, 0x00FF0000);
 }
 
 void	mlx_put_img_mandelbrot(t_vars *vars)
 {
-	int		ix;
-	int		iy;
-	t_screen_coord new;
-	ix = 0;
-	iy = 0;
-	// printf("in mlx_put_img_mandelbrot: x0:%f | x1:%f | y0:%f | y1:%f \n", *vars->screen_coord->x0, *vars->screen_coord->x1, *vars->screen_coord->y0, *vars->screen_coord->y1);
-	while (iy < NY)
+	t_pixel_co	p_coord;
+	t_scr_co	new;
+
+	p_coord.x = 0;
+	p_coord.y = 0;
+	while (p_coord.y < NY)
 	{
-		ix = 0;
-		while (ix < NX)
+		p_coord.x = 0;
+		while (p_coord.x < NX)
 		{
-			put_mandelbrot(&ix, &iy, vars, &new);
-			// if (ix == 10)
-			// 	break ;
-			ix++;
+			put_mandelbrot(&p_coord, vars, &new);
+			p_coord.x++;
 		}
-		// if (iy == 10)
-		// 	break ;
-		iy++;
+		p_coord.y++;
 	}
 	if (vars->rate != 1.0)
-	{
-		vars->screen_coord->x0 = new.x0;
-		vars->screen_coord->x1 = new.x1;
-		vars->screen_coord->y0 = new.y0;
-		vars->screen_coord->y1 = new.y1;
-	}
+		screen_co_set(&new, vars->scr_co);
 }
