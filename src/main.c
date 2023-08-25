@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 13:23:27 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/06 18:50:01 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/25 21:48:46 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	mouse_hook(int button, int x, int y, t_vars *vars)
 {
 	vars->mouse_co->double_x = (double)x;
 	vars->mouse_co->double_y = (double)y;
-	ft_printf("x:%lf|y:%lf\n", vars->mouse_co->double_x, vars->mouse_co->double_y);
 	if (button == SCROLL_DOWN)
 		vars->rate = ZOOMIN_RATE;
 	else if (button == SCROLL_UP)
@@ -59,15 +58,11 @@ int	mouse_hook(int button, int x, int y, t_vars *vars)
 		clear_img(vars->img);
 		if (ft_strcmp(vars->fig_type, "m") == 0)
 		{
-			printf("%f\n", vars->scr_co->x1);
 			mlx_put_img_mandelbrot(vars);
 			mlx_put_image_to_window(vars->mlx, vars->win, vars->img->img, 0, 0);
 		}
 		else if (ft_strcmp(vars->fig_type, "j") == 0)
 		{
-			printf("%f\n", vars->scr_co->x1);
-			printf("julia_para(x):%f\n", vars->julia_parameter.double_x);
-			printf("julia_para(y):%f\n", vars->julia_parameter.double_y);
 			mlx_put_img_julia(vars);
 			mlx_put_image_to_window(vars->mlx, vars->win, vars->img->img, 0, 0);
 		}
@@ -92,35 +87,32 @@ int	main(int argc, char **argv)
 	s_coord.x1 = x1;
 	s_coord.y0 = y0;
 	s_coord.y1 = y1;
+	vars.mlx = mlx_init();
+	vars.img = &img;
+	vars.mouse_co = &coord;
+	vars.rate = 1.0;
+	vars.scr_co = &s_coord;
+	if (vars.mlx == NULL)
+		return (1);
+	vars.win = mlx_new_window(vars.mlx, NX, NY, "Fractol");
+	img.img = mlx_new_image(vars.mlx, NX, NY);
+	if (img.img == NULL)
+		return (1);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, \
+	&img.line_length, &img.endian);
+	// init(&vars, &img);
+	vars.rate = 1;
+
+	printf("%f|%f\n", ft_atof(argv[2]), ft_atof(argv[3]));
+	
 	if ((argc == 3 && ft_strcmp(argv[1], "j") == 0) || \
 		(argc == 2 && ft_strcmp(argv[1], "m") == 0))
 	{
-		vars.mlx = mlx_init();
-		vars.img = &img;
-		vars.mouse_co = &coord;
-		vars.rate = 1.0;
-		vars.scr_co = &s_coord;
-		if (vars.mlx == NULL)
-			return (1);
-		vars.win = mlx_new_window(vars.mlx, NX, NY, "Hello world!");
-		img.img = mlx_new_image(vars.mlx, NX, NY);
-		if (img.img == NULL)
-			return (1);
-		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, \
-		&img.line_length, &img.endian);
-		vars.rate = 1;
-		if (ft_strcmp(argv[1], "j") == 0 && ft_strcmp(argv[2], "1") == 0)
+		if (ft_strcmp(argv[1], "j") == 0 && argc == 4)
 		{
 			vars.fig_type = "j";
-			vars.julia_parameter.double_x = 0.4;
-			vars.julia_parameter.double_y = -0.325;
-			mlx_put_img_julia(&vars);
-		}
-		else if (ft_strcmp(argv[1], "j") == 0 && ft_strcmp(argv[2], "2") == 0)
-		{
-			vars.fig_type = "j";
-			vars.julia_parameter.double_x = -0.8;
-			vars.julia_parameter.double_y = 0.156;
+			vars.julia_parameter.double_x = ft_atof(argv[2]);
+			vars.julia_parameter.double_y = ft_atof(argv[3]);
 			mlx_put_img_julia(&vars);
 		}
 		else if (ft_strcmp(argv[1], "m") == 0)
@@ -146,13 +138,3 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 }
-
-
-// int main(int argc, char **argv) {
-//   struct timeval tv;
-//   gettimeofday(&tv, NULL);
-//   printf("%ld %06lu\n", tv.tv_sec, tv.tv_usec);
-//   gettimeofday(&tv, NULL);
-//   printf("%ld %06lu\n", tv.tv_sec, tv.tv_usec);
-//   return 0;
-// }

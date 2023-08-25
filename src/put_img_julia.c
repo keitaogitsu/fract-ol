@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 10:57:49 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/06 19:42:04 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/18 15:58:07 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ void	mlx_put_img_julia(t_vars *vars)
 	p_coord.y = 0;
 	c.real = vars->julia_parameter.double_x;
 	c.imag = vars->julia_parameter.double_y;
-	// printf("julia_para(x) in mlx_put_img_julia:%f\n", vars->julia_parameter.double_x);
-	// printf("julia_para(y) in mlx_put_img_julia:%f\n", vars->julia_parameter.double_y);
 	while (p_coord.y < NY)
 	{
 		p_coord.x = 0;

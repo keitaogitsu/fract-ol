@@ -16,7 +16,9 @@ SRCS            := 	./src/main.c \
 					./src/ft_strcmp.c \
 					./src/clear_img.c \
 					./src/screen_coord_set.c \
-					./src/zoom_calc.c
+					./src/zoom_calc.c \
+					./src/ft_atof.c \
+					./src/init.c
 
 OBJS            := $(SRCS:%.c=%.o)
 

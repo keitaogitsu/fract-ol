@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 14:22:46 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/06 18:39:43 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/25 21:31:17 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_complex {
 	double	imag;
 }				t_complex;
 
+void	init(t_vars	*vars, t_data *img);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	mlx_put_img_mandelbrot(t_vars *vars);
 double	my_sqrt(double x);
@@ -82,5 +83,6 @@ void	clear_img(t_data *img);
 void	screen_co_set(t_scr_co *src_screen, t_scr_co *dst_screen);
 void	cursor_center_zoom_calc(t_vars *vars, t_scr_co *tmp);
 void	pixel_to_general(t_scr_co *new_scr_co, int *ix, int *iy, t_coord *val);
+double  ft_atof(char *num_ptr);
 
 #endif
