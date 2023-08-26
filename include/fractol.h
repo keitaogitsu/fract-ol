@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 14:22:46 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/25 21:31:17 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/26 18:53:20 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_vars {
 	t_coord		*mouse_co;
 	t_scr_co	*scr_co;
 	t_coord		julia_parameter;
+	int			num_of_calc;
 }				t_vars;
 
 typedef struct s_complex {
@@ -78,11 +79,14 @@ double	my_sqrt(double x);
 double	abs_complex(t_complex a);
 void	mlx_put_img_julia(t_vars *vars);
 void	put_usage_description(void);
+int		ft_isdigit(int c);
 int		ft_strcmp(char *s1, char *s2);
 void	clear_img(t_data *img);
 void	screen_co_set(t_scr_co *src_screen, t_scr_co *dst_screen);
 void	cursor_center_zoom_calc(t_vars *vars, t_scr_co *tmp);
 void	pixel_to_general(t_scr_co *new_scr_co, int *ix, int *iy, t_coord *val);
-double  ft_atof(char *num_ptr);
+double	ft_atof(char *num_ptr, int *error_flag);
+void	put_color(t_vars *vars, t_pixel_co *p_co);
+void	mlx_operation(t_vars *vars, t_data *img);
 
 #endif

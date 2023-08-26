@@ -6,14 +6,11 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 10:57:49 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/18 15:58:07 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/26 18:44:16 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../include/fractol.h"
-#include <stdio.h>
-
 
 static int	include_julia_set(t_complex z, t_complex c, int max_iter)
 {
@@ -24,13 +21,13 @@ static int	include_julia_set(t_complex z, t_complex c, int max_iter)
 	while (i++ < max_iter)
 	{
 		if (abs_complex(z) > 2.0)
-			return (0);
+			return (i);
 		tmp.real = z.real;
 		tmp.imag = z.imag;
 		z.real = tmp.real * tmp.real - tmp.imag * tmp.imag + c.real;
 		z.imag = 2 * tmp.real * tmp.imag + c.imag;
 	}
-	return (1);
+	return (0);
 }
 
 void	put_j(t_pixel_co *p_co, t_vars *vars, t_complex c, t_scr_co *new_scr)
@@ -55,8 +52,8 @@ void	put_j(t_pixel_co *p_co, t_vars *vars, t_complex c, t_scr_co *new_scr)
 	}
 	z.real = val.double_x;
 	z.imag = val.double_y;
-	if (include_julia_set(z, c, MAX_ITER))
-		my_mlx_pixel_put(vars->img, p_co->x, p_co->y, 0x00FF0000);
+	vars->num_of_calc = include_julia_set(z, c, MAX_ITER);
+	put_color(vars, p_co);
 }
 
 void	mlx_put_img_julia(t_vars *vars)

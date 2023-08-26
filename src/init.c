@@ -6,39 +6,33 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:26:03 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/25 21:43:27 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/26 17:14:58 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 void	init(t_vars	*vars, t_data *img)
 {
-    t_coord	coord;
-	t_scr_co s_coord;
-	double x0 = 0.0;
-	double x1 = 500.0;
-	double y0 = 0.0;
-	double y1 = 500.0;
-	
-	coord.double_x = 0.0;
-	coord.double_y = 0.0;
-	s_coord.x0 = x0;
-	s_coord.x1 = x1;
-	s_coord.y0 = y0;
-	s_coord.y1 = y1;
-	vars->mouse_co = &coord;
-	vars->rate = 1.0;
-	vars->scr_co = &s_coord;
+	vars->rate = 1;
+	vars->mouse_co = (t_coord *)malloc(sizeof(t_coord) * 1);
+	vars->scr_co = (t_scr_co *)malloc(sizeof(t_scr_co) * 1);
+	if (vars->mouse_co == NULL || vars->scr_co == NULL)
+		exit(1);
+	vars->scr_co->x0 = 0.0;
+	vars->scr_co->x1 = 500.0;
+	vars->scr_co->y0 = 0.0;
+	vars->scr_co->y1 = 500.0;
 	vars->mlx = mlx_init();
 	if (vars->mlx == NULL)
 		exit(1);
 	vars->img = img;
-    if (img->img == NULL)
-		exit(1);
 	vars->win = mlx_new_window(vars->mlx, NX, NY, "Fractol");
 	img->img = mlx_new_image(vars->mlx, NX, NY);
+	if (img->img == NULL)
+		exit(1);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, \
 	&img->line_length, &img->endian);
 }

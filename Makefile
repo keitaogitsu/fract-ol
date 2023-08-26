@@ -13,12 +13,15 @@ SRCS            := 	./src/main.c \
 					./src/put_img_julia.c \
 					./src/calc.c \
 					./src/put_usage_description.c \
+					./src/ft_isdigit.c \
 					./src/ft_strcmp.c \
 					./src/clear_img.c \
 					./src/screen_coord_set.c \
 					./src/zoom_calc.c \
 					./src/ft_atof.c \
-					./src/init.c
+					./src/init.c \
+					./src/put_color.c \
+					./src/mlx_operation.c
 
 OBJS            := $(SRCS:%.c=%.o)
 

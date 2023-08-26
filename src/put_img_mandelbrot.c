@@ -6,12 +6,11 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 22:32:55 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/06 18:43:13 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/26 13:25:14 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
-#include <stdio.h>
 
 static int	include_mandelbrot_set(t_complex c, int max_iter)
 {
@@ -25,13 +24,13 @@ static int	include_mandelbrot_set(t_complex c, int max_iter)
 	while (i++ < max_iter)
 	{
 		if (abs_complex(z) > 2.0)
-			return (0);
+			return (i);
 		tmp.real = z.real;
 		tmp.imag = z.imag;
 		z.real = tmp.real * tmp.real - tmp.imag * tmp.imag + c.real;
 		z.imag = 2 * tmp.real * tmp.imag + c.imag;
 	}
-	return (1);
+	return (0);
 }
 
 void	put_mandelbrot(t_pixel_co *p_co, t_vars *vars, t_scr_co *new_scr)
@@ -56,8 +55,8 @@ void	put_mandelbrot(t_pixel_co *p_co, t_vars *vars, t_scr_co *new_scr)
 	}
 	c.real = val.double_x;
 	c.imag = val.double_y;
-	if (!include_mandelbrot_set(c, MAX_ITER))
-		my_mlx_pixel_put(vars->img, p_co->x, p_co->y, 0x00FF0000);
+	vars->num_of_calc = include_mandelbrot_set(c, MAX_ITER);
+	put_color(vars, p_co);
 }
 
 void	mlx_put_img_mandelbrot(t_vars *vars)
