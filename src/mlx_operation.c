@@ -6,19 +6,11 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 17:17:57 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/26 17:22:29 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/27 18:54:08 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
 
 int	closemlx(t_vars *vars)
 {
@@ -68,11 +60,18 @@ int	mouse_hook(int button, int x, int y, t_vars *vars)
 	return (0);
 }
 
+int	rendering(t_vars *vars)
+{
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img->img, 0, 0);
+	return (0);
+}
+
 void	mlx_operation(t_vars *vars, t_data *img)
 {
 	mlx_put_image_to_window(vars->mlx, vars->win, img->img, 0, 0);
 	mlx_hook(vars->win, 17, 0, closemlx, vars);
 	mlx_hook(vars->win, KEY_PRESS, 1L << 0, keypress, vars);
 	mlx_mouse_hook(vars->win, mouse_hook, vars);
+	mlx_expose_hook(vars->win, rendering, vars);
 	mlx_loop(vars->mlx);
 }

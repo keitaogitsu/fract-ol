@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 10:57:49 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/26 18:44:16 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/27 13:39:12 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	put_j(t_pixel_co *p_co, t_vars *vars, t_complex c, t_scr_co *new_scr)
 		diff.double_x = (XMAX - XMIN) / (double)NX;
 		diff.double_y = (YMAX - YMIN) / (double)NY;
 		val.double_x = XMIN + diff.double_x * (double)p_co->x;
-		val.double_y = YMIN + diff.double_y * (double)p_co->y;
+		val.double_y = -(YMIN + diff.double_y * (double)p_co->y);
 	}
 	else
 	{

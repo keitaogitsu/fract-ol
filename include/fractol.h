@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 14:22:46 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/26 18:53:20 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/27 18:55:08 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ void	pixel_to_general(t_scr_co *new_scr_co, int *ix, int *iy, t_coord *val);
 double	ft_atof(char *num_ptr, int *error_flag);
 void	put_color(t_vars *vars, t_pixel_co *p_co);
 void	mlx_operation(t_vars *vars, t_data *img);
+int		rendering(t_vars *vars);
 
 #endif

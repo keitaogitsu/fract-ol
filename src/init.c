@@ -6,12 +6,11 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:26:03 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/26 17:14:58 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/27 14:38:10 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 void	init(t_vars	*vars, t_data *img)
@@ -22,9 +21,9 @@ void	init(t_vars	*vars, t_data *img)
 	if (vars->mouse_co == NULL || vars->scr_co == NULL)
 		exit(1);
 	vars->scr_co->x0 = 0.0;
-	vars->scr_co->x1 = 500.0;
+	vars->scr_co->x1 = (double)NX;
 	vars->scr_co->y0 = 0.0;
-	vars->scr_co->y1 = 500.0;
+	vars->scr_co->y1 = (double)NY;
 	vars->mlx = mlx_init();
 	if (vars->mlx == NULL)
 		exit(1);

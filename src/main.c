@@ -6,12 +6,11 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 13:23:27 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/26 18:43:17 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/27 18:52:48 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
-#include <stdio.h>
 
 static void	j_m_judge(char **argv, t_vars *vars, int *error_flag)
 {

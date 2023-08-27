@@ -6,11 +6,19 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 13:21:33 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/26 18:44:00 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/27 18:53:55 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+}
 
 void	put_color(t_vars *vars, t_pixel_co *p_co)
 {

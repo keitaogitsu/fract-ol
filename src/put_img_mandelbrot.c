@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 22:32:55 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/26 13:25:14 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/08/27 14:57:58 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ static int	include_mandelbrot_set(t_complex c, int max_iter)
 void	put_mandelbrot(t_pixel_co *p_co, t_vars *vars, t_scr_co *new_scr)
 {
 	t_coord		val;
-	t_coord		diff;
 	t_complex	c;
 	t_scr_co	tmp;
+	t_coord		diff;
 
 	if (vars->rate == 1.0)
 	{
 		diff.double_x = (XMAX - XMIN) / (double)NX;
 		diff.double_y = (YMAX - YMIN) / (double)NY;
 		val.double_x = XMIN + diff.double_x * (double)p_co->x;
-		val.double_y = YMIN + diff.double_y * (double)p_co->y;
+		val.double_y = -(YMIN + diff.double_y * (double)p_co->y);
 	}
 	else
 	{
