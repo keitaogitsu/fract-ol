@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 14:22:46 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/27 18:55:08 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/09/02 16:33:18 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define YMIN -2.0
 # define XMAX 2.0
 # define YMAX 2.0
-# define MAX_ITER 100
+# define MAX_ITER 50
 
 typedef struct s_data {
 	void	*img;

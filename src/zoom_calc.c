@@ -6,12 +6,11 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 15:41:17 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/08/27 16:10:47 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/09/02 16:37:43 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
-#include <stdio.h>
 
 void	cursor_center_zoom_calc(t_vars *vars, t_scr_co *tmp)
 {
